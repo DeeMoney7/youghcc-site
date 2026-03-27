@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Youghiogheny Country Club — Est. 1911</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --forest: #1a2e1e;
+  --forest-mid: #253a29;
+  --sage: #4a6741;
+  --gold: #c9a84c;
+  --gold-light: #e4c97e;
+  --cream: #f5f0e8;
+  --parchment: #ede6d6;
+  --warm-white: #faf8f3;
+  --charcoal: #2c2c2c;
+  --stone: #9a9086;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  background: var(--warm-white);
+  color: var(--charcoal);
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 72px;
+  background: rgba(26,46,30,0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+}
+.nav-logo { display: flex; flex-direction: column; line-height: 1; cursor: pointer; }
+.nav-logo-main { font-size: 17px; font-weight: 600; letter-spacing: 0.12em; color: var(--gold-light); text-transform: uppercase; }
+.nav-logo-sub { font-family: 'Josefin Sans', sans-serif; font-size: 9px; font-weight: 200; letter-spacing: 0.35em; color: var(--stone); text-transform: uppercase; margin-top: 3px; }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a { font-family: 'Josefin Sans', sans-serif; font-size: 10px; font-weight: 300; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(245,240,232,0.65); text-decoration: none; transition: color 0.3s; cursor: pointer; }
+.nav-links a:hover, .nav-links a.active { color: var(--gold-light); }
+.nav-cta { font-family: 'Josefin Sans', sans-serif; font-size: 10px; font-weight: 300; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold); padding: 8px 20px; text-decoration: none; transition: all 0.3s; cursor: pointer; }
+.nav-cta:hover { background: var(--gold); color: var(--forest); }
+
+/* ── PAGE SYSTEM ── */
+.page { display: none; min-height: 100vh; }
+.page.active { display: block; animation: pageFadeIn 0.4s ease both; }
+@keyframes pageFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── SHARED COMPONENTS ── */
+.section-eyebrow { font-family: 'Josefin Sans', sans-serif; font-size: 9px; font-weight: 300; letter-spacing: 0.45em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; display: flex; align-items: center; gap: 14px; }
+.section-eyebrow::after { content: ''; flex: none; width: 40px; height: 1px; background: var(--gold); opacity: 0.5; }
+.section-title { font-size: clamp(34px, 4vw, 54px); font-weight: 300; line-height: 1.1; margin-bottom: 20px; color: var(--forest); }
+.section-title em { font-style: italic; color: var(--sage); }
+.section-body { font-size: 17px; font-weight: 300; line-height: 1.85; color: #5a5347; }
+.btn-primary { font-family: 'Josefin Sans', sans-serif; font-size: 10px; font-weight: 300; letter-spacing: 0.3em; text-transform: uppercase; background: var(--gold); color: var(--forest); padding: 16px 36px; text-decoration: none; transition: all 0.3s; display: inline-block; border: none; cursor: pointer; }
+.btn-primary:hover { background: var(--gold-light); }
+.btn-ghost { font-family: 'Josefin Sans', sans-serif; font-size: 10px; font-weight: 300; letter-spacing: 0.3em; text-transform: uppercase; border: 1px solid rgba(245,240,232,0.4); color: var(--cream); padding: 16px 36px; text-decoration: none; transition: all 0.3s; display: inline-block; cursor: pointer; background: transparent; }
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold-light); }
+.text-link { font-family: 'Josefin Sans', sans-serif; font-size: 10px; font-weight: 300; letter-spacing: 0.3em; text-transform: uppercase; color: var(--sage); text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: gap 0.3s, color 0.3s; cursor: pointer; background: none; border: none; }
+.text-link::after { content: '→'; font-size: 14px; }
+.text-link:hover { gap: 18px; color: var(--forest); }
+
+/* ── FOOTER ── */
+footer { background: var(--forest); padding: 64px 80px 36px; border-top: 1px solid rgba(201,168,76,0.15); }
+.footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 56px; margin-bottom: 48px; }
+.footer-brand-name { font-size: 20px; font-weight: 300; color: var(--gold-light); margin-bottom: 6px; }
+.footer-brand-est { font-family: 'Josefin Sans', sans-serif; font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--stone); margin-bottom: 18px; }
+.footer-address { font-size: 15px; font-weight: 300; font-style: italic; color: rgba(245,240,232,0.4); line-height: 1.7; }
+.footer-col-title { font-family: 'Josefin Sans', sans-serif; font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-links a { font-size: 15px; font-weight: 300; color: rgba(245,240,232,0.4); text-decoration: none; transition: color 0.3s; cursor: pointer; }
+.footer-links a:hover { color: var(--gold-light); }
+.footer-bottom { border-top: 1px solid rgba(201,168,76,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; }
+.footer-copy { font-family: 'Josefin Sans', sans-serif; font-size: 9px; letter-spacing: 0.2em; color: rgba(154,144,134,0.5); }
+.footer-phone { font-family: 'Josefin Sans', sans-serif; font-size: 9px; letter-spacing: 0.2em; color: var(--gold); }
+
+/* ══════════════════════════════════
+   HOME PAGE
+══════════════════════════════════ */
+.hero { position: relative; height: 100vh; min-height: 680px; background: var(--forest); display: flex; align-items: flex-end; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; background: linear-gradient(155deg, rgba(26,46,30,0.25) 0%, rgba(26,46,30,0.8) 55%, rgba(26,46,30,0.97) 100%), url('https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=1800&q=80') center/cover no-repeat; animation: heroZoom 18s ease-in-out infinite alternate; }
+@keyframes heroZoom { from { transform: scale(1.04); } to { transform: scale(1.0); } }
+.hero::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 100px; background: var(--warm-white); clip-path: polygon(0 100%, 100% 20%, 100% 100%); }
+.hero-content { position: relative; z-index: 2; padding: 0 80px 110px; max-width: 760px; animation: fadeUp 1s ease both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+.hero-est { font-family: 'Josefin Sans', sans-serif; font-size: 10px; font-weight: 200; letter-spacing: 0.5em; color: var(--gold); text-transform: uppercase; margin-bottom: 18px; display: flex; align-items: center; gap: 14px; }
+.hero-est::before { content: ''; display: block; width: 40px; height: 1px; background: var(--gold); }
+.hero-title { font-size: clamp(46px, 7vw, 86px); font-weight: 300; line-height: 1.0; color: var(--cream); margin-bottom: 14px; }
+.hero-title em { font-style: italic; color: var(--gold-light); }
+.hero-subtitle { font-size: 18px; font-weight: 300; font-style: italic; color: rgba(245,240,232,0.55); margin-bottom: 40px; }
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+.scroll-hint { position: absolute; bottom: 130px; right: 80px; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.scroll-hint span { font-family: 'Josefin Sans', sans-serif; font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(245,240,232,0.35); writing-mode: vertical-rl; }
+.scroll-line { width: 1px; height: 56px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+@keyframes scrollPulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+.stats-bar { background: var(--forest); display: grid; grid-template-columns: repeat(4, 1fr); }
+.stat-item { padding: 32px 36px; border-right: 1px solid rgba(201,168,76,0.12); text-align: center; transition: background 0.3s; }
+.stat-item:last-child { border-right: none; }
+.stat-item:hover { background: var(--forest-mid); }
+.stat-num { font-size: 40px; font-weight: 300; color: var(--gold-light); line-height: 1; margin-bottom: 6px; }
+.stat-label { font-family: 'Josefin Sans', sans-serif; font-size: 9px; font-weight: 200; letter-spacing: 0.3em; text-transform: uppercase; color: var(--stone); }
+
+.home-golf { display: grid; grid-template-columns: 1fr 1fr; min-height: 560px; }
+.split-image { position: relative; overflow: hidden; }
+.split-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+.split-image:hover img { transform: scale(1.04); }
+.split-image-overlay { position: absolute; inset: 0; background: linear-gradient(to right, transparent 55%, var(--warm-white)); pointer-events: none; }
+.split-content { padding: 80px 64px; display: flex; flex-direction: column; justify-content: center; }
+.split-content.dark { background: var(--forest); }
+.split-content.dark .section-title { color: var(--cream); }
+.split-content.dark .section-body { color: rgba(245,240,232,0.55); }
+.split-content.dark .section-eyebrow { color: var(--gold); }
+
+.home-amenities-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+.amenity-card { position: relative; overflow: hidden; aspect-ratio: 4/3; cursor: pointer; background: var(--forest); }
+.amenity-card img { width: 100%; height: 100%; object-fit: cover; opacity: 0.75; transition: opacity 0.5s, transform 0.6s; }
+.amenity-card:hover img { opacity: 0.4; transform: scale(1.06); }
+.amenity-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,46,30,0.9) 0%, transparent 50%); display: flex; flex-direction: column; justify-content: flex-end; padding: 26px; transition: background 0.4s; }
+.amenity-card:hover .amenity-overlay { background: linear-gradient(to top, rgba(26,46,30,0.95) 0%, rgba(26,46,30,0.4) 100%); }
+.amenity-name { font-size: 22px; font-weight: 300; color: var(--cream); margin-bottom: 4px; }
+.amenity-desc { font-family: 'Josefin Sans', sans-serif; font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); opacity: 0; transform: translateY(8px); transition: all 0.4s; }
+.amenity-card:hover .amenity-desc { opacity: 1; transform: translateY(0); }
+
+.membership-cta { background: var(--cream); text-align: center; padding: 110px 80px; position: relative; overflow: hidden; }
+.membership-cta::before { content: 'MEMBER'; position: absolute; font-size: 180px; font-weight: 300; color: rgba(74,103,65,0.05); top: 50%; left: 50%; transform: translate(-50%,-50%); white-space: nowrap; pointer-events: none; font-family: 'Cormorant Garamond', serif; }
+.membership-title { font-size: clamp(38px, 5vw, 64px); font-weight: 300; color: var(--forest); margin-bottom: 20px; line-height: 1.1; }
+.membership-title em { font-style: italic; color: var(--sage); }
+.membership-perks { display: flex; justify-content: center; gap: 56px; margin: 36px 0 48px; flex-wrap: wrap; }
+.perk { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.perk-icon { font-size: 26px; }
+.perk-name { font-family: 'Josefin Sans', sans-serif; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--stone); }
+
+.history-strip { background: var(--forest-mid); padding: 52px 80px; display: flex; align-items: center; gap: 56px; }
+.history-year { font-size: 80px; font-weight: 300; color: rgba(201,168,76,0.18); line-height: 1; flex-shrink: 0; }
+.history-divider { width: 1px; height: 70px; background: rgba(201,168,76,0.2); flex-shrink: 0; }
+.history-text { font-size: 17px; font-style: italic; font-weight: 300; line-height: 1.75; color: rgba(245,240,232,0.55); max-width: 660px; }
+
+/* ══════════════════════════════════
+   INNER PAGE HERO
+══════════════════════════════════ */
+.page-hero { position: relative; height: 52vh; min-height: 380px; display: flex; align-items: flex-end; overflow: hidden; padding-top: 72px; }
+.page-hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.page-hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,46,30,0.92) 0%, rgba(26,46,30,0.4) 100%); }
+.page-hero-content { position: relative; z-index: 2; padding: 0 80px 56px; }
+.page-hero-eyebrow { font-family: 'Josefin Sans', sans-serif; font-size: 9px; letter-spacing: 0.45em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; display: flex; align-items: center; gap: 14px; }
+.page-hero-eyebrow::before { content: ''; width: 40px; height: 1px; background: var(--gold); }
+.page-hero-title { font-size: clamp(42px, 6vw, 76px); font-weight: 300; color: var(--cream); line-height: 1.0; }
+.page-hero-title em { font-style: italic; color: var(--gold-light); }
+
+/* ══════════════════════════════════
+   GOLF PAGE
+══════════════════════════════════ */
+.golf-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 0; min-height: 500px; }
+.golf-intro-content { padding: 80px 72px; }
+.golf-features { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.golf-feature { padding: 18px 0; border-top: 1px solid rgba(74,103,65,0.2); }
+.golf-feature-label { font-family: 'Josefin Sans', sans-serif; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--stone); margin-bottom: 5px; }
+.golf-feature-value { font-size: 20px; font-weight: 300; color: var(--forest); }
+.golf-schedule { background: var(--parchment); padding: 80px; }
+.schedule-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px; }
+.schedule-card { background: white; padding: 36px 32px; border-top: 3px solid var(--gold); }
+.schedule-day { font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+.schedule-time { font-size: 22px; font-weight: 300; color: var(--forest); margin-bottom: 8px; }
+.schedule-note { font-size: 14px; font-weight: 300; color: var(--stone); line-height: 1.6; }
+.dress-code { background: var(--forest); padding: 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+.dress-code .section-title { color: var(--cream); }
+.dress-list { list-style: none; margin-top: 28px; }
+.dress-list li { font-size: 16px; font-weight: 300; color: rgba(245,240,232,0.6); padding: 10px 0; border-bottom: 1px solid rgba(201,168,76,0.1); display: flex; align-items: flex-start; gap: 12px; }
+.dress-list li::before { content: '✓'; color: var(--gold); flex-shrink: 0; margin-top: 1px; }
+.dress-list.no li::before { content: '✗'; color: #c0392b; }
+.contact-bar { background: var(--cream); padding: 60px 80px; display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+.contact-bar-text { font-size: 26px; font-weight: 300; color: var(--forest); }
+.contact-bar-text em { font-style: italic; color: var(--sage); }
+.contact-bar-info { text-align: right; }
+.contact-name { font-size: 18px; font-weight: 300; color: var(--forest); margin-bottom: 4px; }
+.contact-detail { font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 0.2em; color: var(--stone); }
+
+/* ══════════════════════════════════
+   DINING PAGE
+══════════════════════════════════ */
+.dining-intro { display: grid; grid-template-columns: 1.1fr 1fr; gap: 0; min-height: 500px; }
+.dining-intro-content { padding: 80px 72px; }
+.dining-intro-image { position: relative; overflow: hidden; }
+.dining-intro-image img { width: 100%; height: 100%; object-fit: cover; }
+.dining-hours { background: var(--forest); padding: 60px 80px; display: flex; align-items: center; gap: 60px; flex-wrap: wrap; }
+.dining-hours-label { font-family: 'Josefin Sans', sans-serif; font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+.dining-hours-value { font-size: 28px; font-weight: 300; color: var(--cream); }
+.dining-hours-divider { width: 1px; height: 60px; background: rgba(201,168,76,0.2); }
+.menu-section { padding: 80px; background: var(--warm-white); }
+.menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin-top: 48px; }
+.menu-category { background: var(--parchment); padding: 44px 40px; }
+.menu-category-title { font-size: 28px; font-weight: 300; color: var(--forest); margin-bottom: 28px; padding-bottom: 14px; border-bottom: 1px solid rgba(74,103,65,0.2); }
+.menu-item { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-bottom: 1px dotted rgba(154,144,134,0.25); gap: 16px; }
+.menu-item:last-child { border-bottom: none; }
+.menu-item-name { font-size: 16px; font-weight: 300; color: var(--charcoal); flex: 1; }
+.menu-item-desc { font-size: 13px; font-style: italic; color: var(--stone); margin-top: 2px; }
+.menu-item-price { font-family: 'Josefin Sans', sans-serif; font-size: 13px; color: var(--sage); white-space: nowrap; flex-shrink: 0; }
+.menu-note { margin-top: 48px; text-align: center; font-size: 15px; font-style: italic; color: var(--stone); }
+
+/* ══════════════════════════════════
+   POOL PAGE
+══════════════════════════════════ */
+.pool-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 0; min-height: 500px; }
+.pool-intro-content { padding: 80px 72px; }
+.pool-intro-image { position: relative; overflow: hidden; }
+.pool-intro-image img { width: 100%; height: 100%; object-fit: cover; }
+.pool-hours { background: var(--forest); padding: 72px 80px; }
+.pool-hours-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 44px; }
+.pool-hour-card { background: var(--forest-mid); padding: 36px 32px; border-top: 2px solid rgba(201,168,76,0.3); }
+.pool-hour-day { font-family: 'Josefin Sans', sans-serif; font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.pool-hour-time { font-size: 26px; font-weight: 300; color: var(--cream); margin-bottom: 6px; }
+.pool-hour-note { font-size: 14px; font-style: italic; color: rgba(245,240,232,0.4); }
+.pool-rules { background: var(--parchment); padding: 80px; }
+.rules-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-top: 44px; }
+.rule-item { background: white; padding: 32px; display: flex; gap: 20px; align-items: flex-start; }
+.rule-num { font-size: 36px; font-weight: 300; color: rgba(74,103,65,0.2); line-height: 1; flex-shrink: 0; }
+.rule-text { font-size: 16px; font-weight: 300; color: var(--charcoal); line-height: 1.65; }
+
+/* ══════════════════════════════════
+   WEDDINGS PAGE
+══════════════════════════════════ */
+.weddings-intro { display: grid; grid-template-columns: 1fr 1.1fr; gap: 0; min-height: 520px; }
+.weddings-intro-content { padding: 80px 72px; }
+.weddings-intro-image { position: relative; overflow: hidden; }
+.weddings-intro-image img { width: 100%; height: 100%; object-fit: cover; }
+.venue-features { background: var(--parchment); padding: 80px; }
+.venue-features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 48px; }
+.venue-feature-card { background: white; padding: 40px 36px; text-align: center; }
+.venue-feature-icon { font-size: 32px; margin-bottom: 16px; }
+.venue-feature-title { font-size: 22px; font-weight: 300; color: var(--forest); margin-bottom: 10px; }
+.venue-feature-desc { font-size: 15px; font-weight: 300; color: var(--stone); line-height: 1.6; }
+.testimonials { background: var(--forest); padding: 80px; }
+.testimonials .section-title { color: var(--cream); }
+.testimonials-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 48px; }
+.testimonial-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(201,168,76,0.15); padding: 40px; }
+.testimonial-text { font-size: 17px; font-style: italic; font-weight: 300; color: rgba(245,240,232,0.65); line-height: 1.8; margin-bottom: 20px; }
+.testimonial-author { font-family: 'Josefin Sans', sans-serif; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
+.weddings-cta { background: var(--cream); padding: 90px 80px; text-align: center; }
+.weddings-cta .section-eyebrow { justify-content: center; }
+.weddings-cta .section-eyebrow::after { display: none; }
+
+/* ══════════════════════════════════
+   HISTORY PAGE
+══════════════════════════════════ */
+.history-content { padding: 80px; display: grid; grid-template-columns: 1fr 2fr; gap: 80px; }
+.history-timeline { }
+.timeline-item { position: relative; padding: 0 0 48px 32px; border-left: 1px solid rgba(201,168,76,0.25); }
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-dot { position: absolute; left: -5px; top: 4px; width: 9px; height: 9px; background: var(--gold); border-radius: 50%; }
+.timeline-year { font-family: 'Josefin Sans', sans-serif; font-size: 10px; letter-spacing: 0.35em; color: var(--gold); margin-bottom: 6px; }
+.timeline-event { font-size: 17px; font-weight: 300; color: var(--charcoal); line-height: 1.6; }
+.history-main { }
+.history-lead { font-size: 22px; font-weight: 300; font-style: italic; color: var(--sage); line-height: 1.7; margin-bottom: 36px; padding-bottom: 36px; border-bottom: 1px solid rgba(74,103,65,0.2); }
+.history-body p { font-size: 17px; font-weight: 300; line-height: 1.85; color: #5a5347; margin-bottom: 22px; }
+.history-pull { background: var(--parchment); padding: 80px; display: flex; align-items: center; gap: 60px; }
+.history-pull-quote { font-size: clamp(28px, 3.5vw, 46px); font-weight: 300; font-style: italic; color: var(--forest); line-height: 1.3; flex: 1; }
+.history-pull-quote em { color: var(--sage); }
+.history-pull-year { font-size: 120px; font-weight: 300; color: rgba(74,103,65,0.1); line-height: 1; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">
+    <span class="nav-logo-main">Youghiogheny CC</span>
+    <span class="nav-logo-sub">McKeesport, Pennsylvania</span>
+  </div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('golf')" data-page="golf">Golf</a></li>
+    <li><a onclick="showPage('dining')" data-page="dining">Dining</a></li>
+    <li><a onclick="showPage('pool')" data-page="pool">Pool & Fitness</a></li>
+    <li><a onclick="showPage('weddings')" data-page="weddings">Weddings</a></li>
+    <li><a onclick="showPage('history')" data-page="history">History</a></li>
+  </ul>
+  <a class="nav-cta" onclick="showPage('home'); setTimeout(()=>document.getElementById('membership').scrollIntoView({behavior:'smooth'}),300)">Membership</a>
+</nav>
+
+<!-- ══ HOME ══ -->
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-est">Established 1911</div>
+      <h1 class="hero-title">Where <em>Tradition</em><br>Meets the Fairway</h1>
+      <p class="hero-subtitle">Western Pennsylvania's premier private country club, since 1911.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="showPage('home'); setTimeout(()=>document.getElementById('membership').scrollIntoView({behavior:'smooth'}),100)">Explore Membership</button>
+        <button class="btn-ghost" onclick="showPage('golf')">View the Course</button>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Discover</span>
+    </div>
+  </section>
+
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-num">113</div><div class="stat-label">Years of Heritage</div></div>
+    <div class="stat-item"><div class="stat-num">18</div><div class="stat-label">Hole Championship Course</div></div>
+    <div class="stat-item"><div class="stat-num">6,375</div><div class="stat-label">Yards of Play</div></div>
+    <div class="stat-item"><div class="stat-num">270</div><div class="stat-label">Ballroom Guest Capacity</div></div>
+  </div>
+
+  <!-- Golf preview -->
+  <div class="home-golf">
+    <div class="split-image">
+      <img src="https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=900&q=80" alt="Golf fairway">
+      <div class="split-image-overlay"></div>
+    </div>
+    <div class="split-content" style="background:var(--warm-white); padding: 80px 64px; display:flex; flex-direction:column; justify-content:center;">
+      <div class="section-eyebrow">Golf</div>
+      <h2 class="section-title">A Course<br><em>Worth the Walk</em></h2>
+      <p class="section-body">Our pristine 18-hole course stretches 6,375 yards through Elizabeth Township's rolling terrain. Maintained by BrightView, it's ranked among Western Pennsylvania's most beautiful courses.</p>
+      <button class="text-link" style="margin-top:40px;" onclick="showPage('golf')">Course Details & Hours</button>
+    </div>
+  </div>
+
+  <!-- Amenities grid -->
+  <div style="background:var(--parchment); padding:80px;">
+    <div class="section-eyebrow">Amenities</div>
+    <h2 class="section-title" style="margin-bottom:48px;">Everything <em>Under One Roof</em></h2>
+    <div class="home-amenities-grid">
+      <div class="amenity-card" onclick="showPage('pool')">
+        <img src="https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=700&q=75" alt="Pool" loading="lazy">
+        <div class="amenity-overlay"><div class="amenity-name">Pool</div><div class="amenity-desc">Newly renovated · Memorial–Labor Day</div></div>
+      </div>
+      <div class="amenity-card" onclick="showPage('pool')">
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=700&q=75" alt="Fitness Center" loading="lazy">
+        <div class="amenity-overlay"><div class="amenity-name">Fitness Center</div><div class="amenity-desc">Full gym · Sauna facilities</div></div>
+      </div>
+      <div class="amenity-card" onclick="showPage('golf')">
+        <img src="https://images.unsplash.com/photo-1566766765562-8ca6a43f1e07?w=700&q=75" alt="Pro Shop" loading="lazy">
+        <div class="amenity-overlay"><div class="amenity-name">Pro Shop</div><div class="amenity-desc">Fully stocked · Club storage</div></div>
+      </div>
+      <div class="amenity-card" onclick="showPage('weddings')">
+        <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=700&q=75" alt="Ballroom" loading="lazy">
+        <div class="amenity-overlay"><div class="amenity-name">Grand Ballroom</div><div class="amenity-desc">Up to 270 guests · Weddings & events</div></div>
+      </div>
+      <div class="amenity-card" onclick="showPage('dining')">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=75" alt="Dining" loading="lazy">
+        <div class="amenity-overlay"><div class="amenity-name">Dining Room</div><div class="amenity-desc">Chef Joe · Wed–Sat 11:30am–9pm</div></div>
+      </div>
+      <div class="amenity-card" onclick="showPage('weddings')">
+        <img src="https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=700&q=75" alt="Meeting Rooms" loading="lazy">
+        <div class="amenity-overlay"><div class="amenity-name">Meeting Rooms</div><div class="amenity-desc">Private · Corporate & social events</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dining preview -->
+  <div style="display:grid; grid-template-columns:1fr 1.2fr; min-height:520px; background:var(--forest);">
+    <div class="split-content dark" style="padding:80px 64px;">
+      <div class="section-eyebrow">Dining</div>
+      <h2 class="section-title">Fine Food,<br><em>Finer Company</em></h2>
+      <p class="section-body">Chef Joe brings expertise in pairing meats and seafood to every plate. Our dining room seats 70 and is open Wednesday through Saturday. Reservations recommended.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;">
+        <span style="font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); border:1px solid rgba(201,168,76,0.35); padding:7px 16px;">Member Dining</span>
+        <span style="font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); border:1px solid rgba(201,168,76,0.35); padding:7px 16px;">Private Events</span>
+        <span style="font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); border:1px solid rgba(201,168,76,0.35); padding:7px 16px;">Weddings</span>
+        <span style="font-family:'Josefin Sans',sans-serif; font-size:9px; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); border:1px solid rgba(201,168,76,0.35); padding:7px 16px;">Banquets</span>
+      </div>
+      <button class="text-link" style="color:var(--gold-light); margin-top:40px;" onclick="showPage('dining')">View Menu & Hours</button>
+    </div>
+    <div style="position:relative; overflow:hidden;">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80" alt="Dining" style="width:100%;height:100%;object-fit:cover;opacity:0.65;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to right,var(--forest) 0%,transparent 35%);"></div>
+    </div>
+  </div>
+
+  <!-- Membership CTA -->
+  <section class="membership-cta" id="membership">
+    <div class="section-eyebrow" style="justify-content:center;">
+      <span style="width:50px;height:1px;background:var(--gold);opacity:0.5;display:block;"></span>
+      Membership
+    </div>
+    <h2 class="membership-title">Join a <em>Legacy</em><br>Over a Century in the Making</h2>
+    <p class="section-body" style="max-width:540px; margin:0 auto;">Membership at Youghiogheny Country Club is more than access to world-class amenities — it's belonging to a community that has gathered on these grounds since 1911.</p>
+    <div class="membership-perks">
+      <div class="perk"><div class="perk-icon">⛳</div><div class="perk-name">Golf Access</div></div>
+      <div class="perk"><div class="perk-icon">🍽</div><div class="perk-name">Dining Privileges</div></div>
+      <div class="perk"><div class="perk-icon">🏊</div><div class="perk-name">Pool & Fitness</div></div>
+      <div class="perk"><div class="perk-icon">🏌️</div><div class="perk-name">Pro Shop Discounts</div></div>
+      <div class="perk"><div class="perk-icon">🎉</div><div class="perk-name">Events & Socials</div></div>
+    </div>
+    <a href="tel:4127512943" class="btn-primary" style="margin-right:16px;">Call (412) 751-2943</a>
+    <a href="mailto:info@youghcc.com" class="btn-ghost" style="border-color:var(--sage);color:var(--sage);">Email Us</a>
+  </section>
+
+  <!-- History strip -->
+  <div class="history-strip">
+    <div class="history-year">1911</div>
+    <div class="history-divider"></div>
+    <p class="history-text">Founded on 107 acres in Elizabeth Township, designed in part by two-time British Open champion Willie Park Jr., YCC has grown into one of Western Pennsylvania's most cherished private clubs.</p>
+    <button class="text-link" style="color:var(--gold); margin-left:auto; flex-shrink:0;" onclick="showPage('history')">Our History</button>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">Youghiogheny Country Club</div>
+        <div class="footer-brand-est">Est. 1911 · McKeesport, PA</div>
+        <div class="footer-address">1901 Greenock & Buena Vista Rd.<br>Elizabeth Township, PA 15135<br><br>(412) 751-2943 · Fax: (412) 751-2946</div>
+      </div>
+      <div>
+        <div class="footer-col-title">The Club</div>
+        <ul class="footer-links">
+          <li><a onclick="showPage('history')">History</a></li>
+          <li><a onclick="showPage('home'); setTimeout(()=>document.getElementById('membership').scrollIntoView({behavior:'smooth'}),300)">Membership</a></li>
+          <li><a href="tel:4127512943">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Recreation</div>
+        <ul class="footer-links">
+          <li><a onclick="showPage('golf')">Golf & Course</a></li>
+          <li><a onclick="showPage('pool')">Pool</a></li>
+          <li><a onclick="showPage('pool')">Fitness Center</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Venue</div>
+        <ul class="footer-links">
+          <li><a onclick="showPage('dining')">Dining</a></li>
+          <li><a onclick="showPage('weddings')">Weddings</a></li>
+          <li><a onclick="showPage('weddings')">Banquet Facilities</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Youghiogheny Country Club. All Rights Reserved.</div>
+      <div class="footer-phone">(412) 751-2943</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══ GOLF ══ -->
+<div id="page-golf" class="page">
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=1800&q=80');"></div>
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">Youghiogheny CC</div>
+      <h1 class="page-hero-title">Golf &amp; <em>The Course</em></h1>
+    </div>
+  </div>
+
+  <div class="golf-intro">
+    <div class="golf-intro-content">
+      <div class="section-eyebrow">The Course</div>
+      <h2 class="section-title">6,375 Yards of<br><em>Pure Pennsylvania</em></h2>
+      <p class="section-body" style="max-width:480px;">Youghiogheny's Golf Course extends 6,375 yards, offering a challenging and scenic experience. Partnering with BrightView, YCC ensures our course remains one of the most consistently well-maintained and picturesque in Western Pennsylvania.</p>
+      <div class="golf-features">
+        <div class="golf-feature"><div class="golf-feature-label">Total Length</div><div class="golf-feature-value">6,375 yards</div></div>
+        <div class="golf-feature"><div class="golf-feature-label">Holes</div><div class="golf-feature-value">18 holes</div></div>
+        <div class="golf-feature"><div class="golf-feature-label">Driving Range</div><div class="golf-feature-value">300+ yards</div></div>
+        <div class="golf-feature"><div class="golf-feature-label">Teeing Areas</div><div class="golf-feature-value">3 Natural Grass</div></div>
+        <div class="golf-feature"><div class="golf-feature-label">Putting Green</div><div class="golf-feature-value">11-flag holes</div></div>
+        <div class="golf-feature"><div class="golf-feature-label">Maintenance</div><div class="golf-feature-value">BrightView</div></div>
+      </div>
+    </div>
+    <div class="split-image">
+      <img src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=900&q=80" alt="Golf course" loading="lazy">
+    </div>
+  </div>
+
+  <div class="golf-schedule">
+    <div class="section-eyebrow">Hours</div>
+    <h2 class="section-title">Golf <em>Schedule</em></h2>
+    <p class="section-body" style="max-width:580px;">Hours of operation are weather and pace-of-business permitting. All golfers must register in the Golf Shop before beginning play.</p>
+    <div class="schedule-grid">
+      <div class="schedule-card">
+        <div class="schedule-day">Tuesday – Friday</div>
+        <div class="schedule-time">8:00 am – Dusk</div>
+        <div class="schedule-note">May through September. Open day other than private events.</div>
+      </div>
+      <div class="schedule-card">
+        <div class="schedule-day">Saturday, Sunday & Holidays</div>
+        <div class="schedule-time">7:00 am – Dusk</div>
+        <div class="schedule-note">Reserved for Golf Members and one guest until 10:30am. Tee times required on Legal Holidays.</div>
+      </div>
+      <div class="schedule-card">
+        <div class="schedule-day">Monday</div>
+        <div class="schedule-time">Noon – Dusk</div>
+        <div class="schedule-note">Open day other than private events. Closed Mondays November through April.</div>
+      </div>
+      <div class="schedule-card">
+        <div class="schedule-day">Wednesday</div>
+        <div class="schedule-time">Reserved until 1:00 pm</div>
+        <div class="schedule-note">Course reserved for men's play until 1:00pm.</div>
+      </div>
+      <div class="schedule-card">
+        <div class="schedule-day">Thursday</div>
+        <div class="schedule-time">Reserved until 1:00 pm</div>
+        <div class="schedule-note">Reserved for women's play until 11:30am; 18+ play until 1:00pm.</div>
+      </div>
+      <div class="schedule-card">
+        <div class="schedule-day">Snack Bar</div>
+        <div class="schedule-time">8:00 am – 2:00 pm</div>
+        <div class="schedule-note">Wed, Fri, Sat & Sun · April through September.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dress-code">
+    <div>
+      <div class="section-eyebrow" style="color:var(--gold);">Policy</div>
+      <h2 class="section-title" style="color:var(--cream);">Dress <em>Code</em></h2>
+      <p class="section-body" style="color:rgba(245,240,232,0.55); max-width:400px; margin-bottom:28px;">We ask all golfers to dress in a manner befitting the club's standards and traditions.</p>
+      <ul class="dress-list">
+        <li>Collared shirts (tucked in)</li>
+        <li>Golf slacks &amp; shorts</li>
+        <li>Golf skirts</li>
+        <li>Bermuda shorts</li>
+        <li>Golf shoes — soft spikes only</li>
+      </ul>
+    </div>
+    <div>
+      <div class="section-eyebrow" style="color:var(--gold);">&nbsp;</div>
+      <h2 class="section-title" style="color:var(--cream);">Not <em>Permitted</em></h2>
+      <p class="section-body" style="color:rgba(245,240,232,0.55); max-width:400px; margin-bottom:28px;">The following attire is not acceptable on the course or in the clubhouse.</p>
+      <ul class="dress-list no">
+        <li>T-shirts, tank tops, collarless shirts</li>
+        <li>Jeans or denim</li>
+        <li>Tennis or gym shorts</li>
+        <li>Sweat or jogging suits</li>
+        <li>Short shorts (more than 4" above knee)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="contact-bar">
+    <div class="contact-bar-text">Book a <em>Golf Outing</em></div>
+    <div class="contact-bar-info">
+      <div class="contact-name">Tom Beeler, PGA Master Professional</div>
+      <div class="contact-detail">(412) 751-2943 x1102 &nbsp;·&nbsp; tbeeler@youghcc.com</div>
+    </div>
+    <a href="tel:4127512943" class="btn-primary">Call to Book</a>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div><div class="footer-brand-name">Youghiogheny Country Club</div><div class="footer-brand-est">Est. 1911 · McKeesport, PA</div><div class="footer-address">1901 Greenock & Buena Vista Rd.<br>Elizabeth Township, PA 15135<br><br>(412) 751-2943</div></div>
+      <div><div class="footer-col-title">The Club</div><ul class="footer-links"><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('history')">History</a></li></ul></div>
+      <div><div class="footer-col-title">Recreation</div><ul class="footer-links"><li><a onclick="showPage('golf')">Golf</a></li><li><a onclick="showPage('pool')">Pool & Fitness</a></li></ul></div>
+      <div><div class="footer-col-title">Venue</div><ul class="footer-links"><li><a onclick="showPage('dining')">Dining</a></li><li><a onclick="showPage('weddings')">Weddings</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2025 Youghiogheny Country Club.</div><div class="footer-phone">(412) 751-2943</div></div>
+  </footer>
+</div>
+
+<!-- ══ DINING ══ -->
+<div id="page-dining" class="page">
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1800&q=80');"></div>
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">Youghiogheny CC</div>
+      <h1 class="page-hero-title">Dining &amp; <em>The Menu</em></h1>
+    </div>
+  </div>
+
+  <div class="dining-intro">
+    <div class="dining-intro-content">
+      <div class="section-eyebrow">The Restaurant</div>
+      <h2 class="section-title">Chef Joe's<br><em>Culinary Table</em></h2>
+      <p class="section-body" style="max-width:460px;">We are delighted to invite you to an exceptional dining experience where Chef Joe showcases his expertise in pairing meats and seafood. Our wonderfully trained staff ensures your experience with family or friends is nothing short of perfect.</p>
+      <p class="section-body" style="max-width:460px; margin-top:16px;">Our dining room accommodates up to 70 guests — reservations are kindly requested to secure your place.</p>
+      <a href="tel:4127512943" class="btn-primary" style="margin-top:36px;">Reserve a Table</a>
+    </div>
+    <div class="dining-intro-image">
+      <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=900&q=80" alt="Fine dining table" loading="lazy">
+    </div>
+  </div>
+
+  <div class="dining-hours">
+    <div>
+      <div class="dining-hours-label">Hours of Operation</div>
+      <div class="dining-hours-value">Wed – Sat</div>
+    </div>
+    <div class="dining-hours-divider"></div>
+    <div>
+      <div class="dining-hours-label">Open Daily</div>
+      <div class="dining-hours-value">11:30 am – 9:00 pm</div>
+    </div>
+    <div class="dining-hours-divider"></div>
+    <div>
+      <div class="dining-hours-label">Capacity</div>
+      <div class="dining-hours-value">Up to 70 Guests</div>
+    </div>
+    <div class="dining-hours-divider"></div>
+    <div>
+      <div class="dining-hours-label">Reservations</div>
+      <div class="dining-hours-value">Recommended</div>
+    </div>
+  </div>
+
+  <div class="menu-section">
+    <div class="section-eyebrow">Spring 2026</div>
+    <h2 class="section-title">The <em>Menu</em></h2>
+    <div class="menu-grid">
+      <div class="menu-category">
+        <div class="menu-category-title">Starters</div>
+        <div class="menu-item"><div><div class="menu-item-name">Provolone Bastone</div><div class="menu-item-desc">Hand breaded, deep fried, marinara sauce</div></div><div class="menu-item-price">$12.95</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Deviled Crab</div><div class="menu-item-desc">Baked crab casserole, Louie sauce, green onion</div></div><div class="menu-item-price">$18.95</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Club Pierogies</div><div class="menu-item-desc">Potato pierogi, brown onion butter, grilled sauerkraut</div></div><div class="menu-item-price">$12.95</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Bang Bang Shrimp</div><div class="menu-item-desc">Lightly dusted, deep fried, yum yum sauce</div></div><div class="menu-item-price">$14.95</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Seared Ahi</div><div class="menu-item-desc">Served rare, crystallized ginger slaw, ponzu, sesame</div></div><div class="menu-item-price">$21.95</div></div>
+      </div>
+      <div class="menu-category">
+        <div class="menu-category-title">Entrees</div>
+        <div class="menu-item"><div><div class="menu-item-name">Petite Filet</div><div class="menu-item-desc">6 oz. USDA CAB beef tenderloin, broiled to request</div></div><div class="menu-item-price">$54.95</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Day Boat Catch</div><div class="menu-item-desc">Fresh, never frozen · different species weekly</div></div><div class="menu-item-price">Market</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Sole Fiesta</div><div class="menu-item-desc">Sole roulade, broccoli, grilled red pepper, lemon dill</div></div><div class="menu-item-price">$42.95</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Deviled Shrimp</div><div class="menu-item-desc">Baked devil crab stuffed, garlic butter, cheddar sauce</div></div><div class="menu-item-price">$42.95</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Chicken Scallopini</div><div class="menu-item-desc">Coated chicken breast, grilled red peppers, white wine</div></div><div class="menu-item-price">$39.95</div></div>
+      </div>
+      <div class="menu-category">
+        <div class="menu-category-title">Sandwiches</div>
+        <div class="menu-item"><div><div class="menu-item-name">Waygu Burger</div><div class="menu-item-desc">Fresh never frozen USDA Choice, toasted brioche bun</div></div><div class="menu-item-price">$22.95</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Braised Short Rib</div><div class="menu-item-desc">10-hour braise, toasted baguette, melted provolone</div></div><div class="menu-item-price">$21.95</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Chicken Mediterranean</div><div class="menu-item-desc">Grilled breast, feta, grilled peppers, tzatziki, pinza bread</div></div><div class="menu-item-price">$21.95</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Santa Fe Taco</div><div class="menu-item-desc">Deep fried shrimp, pineapple, pickled red onions, cotijo</div></div><div class="menu-item-price">$21.95</div></div>
+        <p style="font-size:13px; font-style:italic; color:var(--stone); margin-top:16px;">All sandwiches served with french fries or coleslaw.</p>
+      </div>
+      <div class="menu-category">
+        <div class="menu-category-title">Soups & Salads</div>
+        <div class="menu-item"><div><div class="menu-item-name">Soup du Jour</div></div><div class="menu-item-price">Cup $5 / Bowl $7</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Classic Caesar</div><div class="menu-item-desc">Chopped romaine, parmesan, anchovy, crispy croutons</div></div><div class="menu-item-price">$11.95</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Club Salad</div><div class="menu-item-desc">Mixed greens, diced bacon, hard egg, bleu crumbles, fries</div></div><div class="menu-item-price">$9.95</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">El Hombre</div><div class="menu-item-desc">Mixed greens, grape tomatoes, cotijo, roasted corn, pepper</div></div><div class="menu-item-price">$9.95</div></div>
+        <div class="menu-item"><div><div class="menu-item-name">Taco Salad</div><div class="menu-item-desc">Wagyu beef chili, cheddar, tortilla, salsa, sour cream</div></div><div class="menu-item-price">$21.95</div></div>
+      </div>
+    </div>
+    <p class="menu-note">Menu subject to seasonal change. Please contact the club for current specials and availability.</p>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div><div class="footer-brand-name">Youghiogheny Country Club</div><div class="footer-brand-est">Est. 1911 · McKeesport, PA</div><div class="footer-address">1901 Greenock & Buena Vista Rd.<br>Elizabeth Township, PA 15135<br><br>(412) 751-2943</div></div>
+      <div><div class="footer-col-title">The Club</div><ul class="footer-links"><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('history')">History</a></li></ul></div>
+      <div><div class="footer-col-title">Recreation</div><ul class="footer-links"><li><a onclick="showPage('golf')">Golf</a></li><li><a onclick="showPage('pool')">Pool & Fitness</a></li></ul></div>
+      <div><div class="footer-col-title">Venue</div><ul class="footer-links"><li><a onclick="showPage('dining')">Dining</a></li><li><a onclick="showPage('weddings')">Weddings</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2025 Youghiogheny Country Club.</div><div class="footer-phone">(412) 751-2943</div></div>
+  </footer>
+</div>
+
+<!-- ══ POOL ══ -->
+<div id="page-pool" class="page">
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=1800&q=80');"></div>
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">Youghiogheny CC</div>
+      <h1 class="page-hero-title">Pool &amp; <em>Fitness</em></h1>
+    </div>
+  </div>
+
+  <div class="pool-intro">
+    <div class="pool-intro-content">
+      <div class="section-eyebrow">The Pool</div>
+      <h2 class="section-title">Heated, Lifeguarded<br>&amp; <em>Newly Renovated</em></h2>
+      <p class="section-body" style="max-width:460px;">The Yough's heated swim facility is a top-notch destination featuring state-of-the-art technology, a Snack Bar, and separate changing facilities for men and women. After a round of golf, relax poolside under the supervision of fully certified lifeguards.</p>
+      <p class="section-body" style="max-width:460px; margin-top:16px;">Full-service dining is available on the upper deck. Outside food and beverages are not permitted on pool grounds.</p>
+    </div>
+    <div class="pool-intro-image">
+      <img src="https://images.unsplash.com/photo-1575429198097-0414ec08e8cd?w=900&q=80" alt="Pool" loading="lazy">
+    </div>
+  </div>
+
+  <div class="pool-hours">
+    <div class="section-eyebrow" style="color:var(--gold);">Hours</div>
+    <h2 class="section-title" style="color:var(--cream);">Pool <em>Schedule</em></h2>
+    <p class="section-body" style="color:rgba(245,240,232,0.55); max-width:560px;">Memorial Day through Labor Day, weather permitting. Call (412) 751-2943 x1108 or check Clubster to confirm daily availability.</p>
+    <div class="pool-hours-grid">
+      <div class="pool-hour-card">
+        <div class="pool-hour-day">Weekdays</div>
+        <div class="pool-hour-time">1:00 pm – 8:00 pm</div>
+        <div class="pool-hour-note">Monday through Friday</div>
+      </div>
+      <div class="pool-hour-card">
+        <div class="pool-hour-day">Weekends</div>
+        <div class="pool-hour-time">Noon – 8:00 pm</div>
+        <div class="pool-hour-note">Saturday and Sunday</div>
+      </div>
+      <div class="pool-hour-card">
+        <div class="pool-hour-day">Season</div>
+        <div class="pool-hour-time">Memorial – Labor Day</div>
+        <div class="pool-hour-note">Hours vary early & late season</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pool-rules">
+    <div class="section-eyebrow">Policies</div>
+    <h2 class="section-title">Pool <em>Guidelines</em></h2>
+    <div class="rules-grid">
+      <div class="rule-item"><div class="rule-num">01</div><div class="rule-text">All members must sign in daily upon arrival and note the number of guests accompanying them.</div></div>
+      <div class="rule-item"><div class="rule-num">02</div><div class="rule-text">Outside food and beverages are not permitted on pool grounds. Please use the on-site Snack Bar.</div></div>
+      <div class="rule-item"><div class="rule-num">03</div><div class="rule-text">Pool is supervised by fully certified lifeguards at all times during operating hours.</div></div>
+      <div class="rule-item"><div class="rule-num">04</div><div class="rule-text">If rain is forecasted or occurred earlier in the day, call the office or check Clubster to confirm the pool is open.</div></div>
+    </div>
+  </div>
+
+  <!-- Fitness -->
+  <div style="display:grid; grid-template-columns:1fr 1fr; min-height:460px;">
+    <div style="position:relative; overflow:hidden;">
+      <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=900&q=80" alt="Fitness Center" style="width:100%;height:100%;object-fit:cover;">
+    </div>
+    <div style="background:var(--parchment); padding:80px 64px; display:flex; flex-direction:column; justify-content:center;">
+      <div class="section-eyebrow">Fitness</div>
+      <h2 class="section-title">State-of-the-Art<br><em>Fitness Center</em></h2>
+      <p class="section-body" style="max-width:440px;">Our gym is equipped with modern cardio and strength training equipment, plus a sauna to help you wind down after a workout or a round of golf.</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:36px;">
+        <div style="border-top:1px solid rgba(74,103,65,0.2); padding-top:14px;"><div style="font-family:'Josefin Sans',sans-serif;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--stone);margin-bottom:4px;">Equipment</div><div style="font-size:18px;font-weight:300;color:var(--forest);">Full Gym</div></div>
+        <div style="border-top:1px solid rgba(74,103,65,0.2); padding-top:14px;"><div style="font-family:'Josefin Sans',sans-serif;font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--stone);margin-bottom:4px;">Recovery</div><div style="font-size:18px;font-weight:300;color:var(--forest);">Sauna</div></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div><div class="footer-brand-name">Youghiogheny Country Club</div><div class="footer-brand-est">Est. 1911 · McKeesport, PA</div><div class="footer-address">1901 Greenock & Buena Vista Rd.<br>Elizabeth Township, PA 15135<br><br>(412) 751-2943</div></div>
+      <div><div class="footer-col-title">The Club</div><ul class="footer-links"><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('history')">History</a></li></ul></div>
+      <div><div class="footer-col-title">Recreation</div><ul class="footer-links"><li><a onclick="showPage('golf')">Golf</a></li><li><a onclick="showPage('pool')">Pool & Fitness</a></li></ul></div>
+      <div><div class="footer-col-title">Venue</div><ul class="footer-links"><li><a onclick="showPage('dining')">Dining</a></li><li><a onclick="showPage('weddings')">Weddings</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2025 Youghiogheny Country Club.</div><div class="footer-phone">(412) 751-2943</div></div>
+  </footer>
+</div>
+
+<!-- ══ WEDDINGS ══ -->
+<div id="page-weddings" class="page">
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1800&q=80');"></div>
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">Youghiogheny CC</div>
+      <h1 class="page-hero-title">Weddings &amp; <em>Events</em></h1>
+    </div>
+  </div>
+
+  <div class="weddings-intro">
+    <div class="weddings-intro-content">
+      <div class="section-eyebrow">Your Special Day</div>
+      <h2 class="section-title">An Elegant Setting<br><em>For Every Moment</em></h2>
+      <p class="section-body" style="max-width:460px;">Our elegantly appointed facility, complemented by exquisitely prepared cuisine and a team of experienced, friendly staff, offers an ideal setting for your most memorable event. Recent renovations have enhanced our venue with brand new ballroom carpeting, luxurious marble tile, updated awnings, and refreshed lobby and bridal suite furnishings.</p>
+      <p class="section-body" style="max-width:460px; margin-top:16px; color:var(--sage); font-style:italic; font-size:18px;">Membership is NOT required to book your wedding at YCC.</p>
+      <a href="tel:4127512943" class="btn-primary" style="margin-top:36px;">Contact Melissa — Event Coordinator</a>
+    </div>
+    <div class="weddings-intro-image">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=80" alt="Wedding reception" loading="lazy">
+    </div>
+  </div>
+
+  <div class="venue-features">
+    <div class="section-eyebrow">The Venue</div>
+    <h2 class="section-title">Everything Your<br><em>Day Deserves</em></h2>
+    <div class="venue-features-grid">
+      <div class="venue-feature-card">
+        <div class="venue-feature-icon">🎊</div>
+        <div class="venue-feature-title">Grand Ballroom</div>
+        <div class="venue-feature-desc">Accommodates up to 270 guests with a spacious dance floor and private bar staffed by professional bartenders.</div>
+      </div>
+      <div class="venue-feature-card">
+        <div class="venue-feature-icon">💐</div>
+        <div class="venue-feature-title">Bridal Suite</div>
+        <div class="venue-feature-desc">Expansive suite with private restrooms. The entire bridal party — up to 30 people — may get ready on location.</div>
+      </div>
+      <div class="venue-feature-card">
+        <div class="venue-feature-icon">📸</div>
+        <div class="venue-feature-title">Golf Course Photos</div>
+        <div class="venue-feature-desc">Take advantage of our picturesque 18-hole course and scenic grounds for stunning wedding photographs.</div>
+      </div>
+      <div class="venue-feature-card">
+        <div class="venue-feature-icon">🌿</div>
+        <div class="venue-feature-title">Private Balcony</div>
+        <div class="venue-feature-desc">A private balcony overlooks the grounds, giving guests a beautiful space to enjoy fresh air throughout the evening.</div>
+      </div>
+      <div class="venue-feature-card">
+        <div class="venue-feature-icon">🍽</div>
+        <div class="venue-feature-title">Exquisite Cuisine</div>
+        <div class="venue-feature-desc">Chef Joe and our culinary team craft tailored menus to make your reception dinner truly unforgettable.</div>
+      </div>
+      <div class="venue-feature-card">
+        <div class="venue-feature-icon">✨</div>
+        <div class="venue-feature-title">Full-Service Staff</div>
+        <div class="venue-feature-desc">Our experienced team is with you from planning through the last dance, handling every detail along the way.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="testimonials">
+    <div class="section-eyebrow" style="color:var(--gold);">What Couples Say</div>
+    <h2 class="section-title">From Our <em>Happy Couples</em></h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-text">"We absolutely loved everything about our wedding here! The venue was absolutely beautiful and I loved how we could do everything there from the ceremony to pictures to the reception. Thought it was very reasonably priced too!"</div>
+        <div class="testimonial-author">— Sam, via WeddingWire</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-text">"They went above and beyond for our needs. What venue allows their entire 30-person bridal party to get ready on location? The Yough does! We are so thankful — it was legit THE MOST EPIC NIGHT EVER!"</div>
+        <div class="testimonial-author">— Taylor, via WeddingWire</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="weddings-cta" style="background:var(--cream); padding:90px 80px; text-align:center;">
+    <div class="section-eyebrow" style="justify-content:center; margin-bottom:16px;">
+      <span style="width:50px;height:1px;background:var(--gold);opacity:0.5;display:inline-block;vertical-align:middle;margin-right:14px;"></span>Book Your Date
+    </div>
+    <h2 class="section-title" style="margin-bottom:16px;">Let's Start <em>Planning</em></h2>
+    <p class="section-body" style="max-width:480px; margin:0 auto 36px;">Contact our event coordinator Melissa to check availability and begin planning your perfect day.</p>
+    <div style="margin-bottom:12px; font-size:18px; font-weight:300; color:var(--forest);">Melissa — Event Coordinator</div>
+    <div style="font-family:'Josefin Sans',sans-serif; font-size:10px; letter-spacing:0.25em; color:var(--stone); margin-bottom:36px;">(412) 751-2943 x1103 &nbsp;·&nbsp; melissa@youghcc.com</div>
+    <a href="tel:4127512943" class="btn-primary">Call to Check Availability</a>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div><div class="footer-brand-name">Youghiogheny Country Club</div><div class="footer-brand-est">Est. 1911 · McKeesport, PA</div><div class="footer-address">1901 Greenock & Buena Vista Rd.<br>Elizabeth Township, PA 15135<br><br>(412) 751-2943</div></div>
+      <div><div class="footer-col-title">The Club</div><ul class="footer-links"><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('history')">History</a></li></ul></div>
+      <div><div class="footer-col-title">Recreation</div><ul class="footer-links"><li><a onclick="showPage('golf')">Golf</a></li><li><a onclick="showPage('pool')">Pool & Fitness</a></li></ul></div>
+      <div><div class="footer-col-title">Venue</div><ul class="footer-links"><li><a onclick="showPage('dining')">Dining</a></li><li><a onclick="showPage('weddings')">Weddings</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2025 Youghiogheny Country Club.</div><div class="footer-phone">(412) 751-2943</div></div>
+  </footer>
+</div>
+
+<!-- ══ HISTORY ══ -->
+<div id="page-history" class="page">
+  <div class="page-hero">
+    <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=1800&q=80'); filter:sepia(30%);"></div>
+    <div class="page-hero-content">
+      <div class="page-hero-eyebrow">Youghiogheny CC</div>
+      <h1 class="page-hero-title">A Century of <em>Tradition</em></h1>
+    </div>
+  </div>
+
+  <div class="history-pull" style="background:var(--forest);">
+    <div class="history-pull-year" style="color:rgba(201,168,76,0.15);">1911</div>
+    <div class="history-pull-quote" style="color:var(--cream);">Nestled on a hillside in Elizabeth Township, overlooking the river its name honors — <em>"the river with a bend."</em></div>
+  </div>
+
+  <div class="history-content">
+    <div class="history-timeline">
+      <div class="section-eyebrow" style="margin-bottom:36px;">Timeline</div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">April 1911</div><div class="timeline-event">107 acres acquired from Colonel Douglas and the McClure Family by a group of golf enthusiasts.</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">May 30, 1911</div><div class="timeline-event">Official opening of the Youghiogheny Country Club. The original farmhouse becomes the member social center.</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">1915</div><div class="timeline-event">Two water tanks constructed in a hollow near the Youghiogheny River to supply irrigation for the greens.</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">1922</div><div class="timeline-event">Course expands to 18 holes. The "back nine" designed by Willie Park Jr., two-time British Open champion. Official opening July 4, 1922.</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">1952</div><div class="timeline-event">Terrace dining area added to the clubhouse.</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">1954</div><div class="timeline-event">Swimming pool added to the club's amenities.</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">1958</div><div class="timeline-event">Underground irrigation system installed.</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">1960</div><div class="timeline-event">Mixed grill and lounge added, enhancing social gathering spaces.</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">2007</div><div class="timeline-event">Dedicated group of members acquires the club and begins comprehensive improvement program.</div></div>
+      <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">Present</div><div class="timeline-event">Newly renovated pool, remodeled locker rooms, state-of-the-art fitness center, and refreshed ballroom and lobby.</div></div>
+    </div>
+    <div class="history-main">
+      <div class="section-eyebrow">Our Story</div>
+      <h2 class="section-title" style="margin-bottom:28px;">A <em>Century</em> of Excellence</h2>
+      <p class="history-lead">In April 1911, a group of passionate golf enthusiasts acquired 107 acres from Colonel Douglas and the McClure Family, transforming the property into a vibrant golf haven.</p>
+      <div class="history-body">
+        <p>The club officially opened its doors on May 30, 1911. Initially featuring a farmhouse renovated into a social center, over the years extensive renovations led to the creation of a striking Colonial and Spanish-style clubhouse, crafted from buff white brick.</p>
+        <p>Early challenges included transporting water up the hill from the Youghiogheny River — spring water was used in summer while ice was hauled daily by horse teams in winter. By July 1915, water tanks were installed near the river to support the greens year-round.</p>
+        <p>The golf course began with just four holes, later expanding to six, and finally to 18 holes by 1922. The back nine was designed by renowned Scottish architect Willie Park Jr., a two-time British Open champion. The completed 18-hole course was officially opened on July 4, 1922, with Taylor Alderdice, President of the National Tube Company, hitting the ceremonial first ball.</p>
+        <p>Membership fees started at $50 initiation and $25 annual dues, but were soon adjusted to match the club's growing prestige. W.A. Cornelius served as the club's first president, with J.E. Lauck as vice president.</p>
+        <p>Over the following decades, the clubhouse saw significant upgrades: a terrace dining area in 1952, a swimming pool in 1954, an underground irrigation system in 1958, and a mixed grill and lounge in 1960. The turn of the millennium brought further enhancements including the Grill Dining Room, a new heated swimming facility, and a state-of-the-art fitness center.</p>
+        <p>In 2007, a dedicated group of members acquired the club and has since overseen numerous improvements — updated cart paths, new carpeting, refreshed interiors, remodeled locker rooms, and a renovated Grand Ballroom. As we celebrate over 100 years of tradition, community, and enjoyment, Youghiogheny Country Club looks forward to many more decades of exceptional experiences and lifelong friendships.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-top">
+      <div><div class="footer-brand-name">Youghiogheny Country Club</div><div class="footer-brand-est">Est. 1911 · McKeesport, PA</div><div class="footer-address">1901 Greenock & Buena Vista Rd.<br>Elizabeth Township, PA 15135<br><br>(412) 751-2943</div></div>
+      <div><div class="footer-col-title">The Club</div><ul class="footer-links"><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('history')">History</a></li></ul></div>
+      <div><div class="footer-col-title">Recreation</div><ul class="footer-links"><li><a onclick="showPage('golf')">Golf</a></li><li><a onclick="showPage('pool')">Pool & Fitness</a></li></ul></div>
+      <div><div class="footer-col-title">Venue</div><ul class="footer-links"><li><a onclick="showPage('dining')">Dining</a></li><li><a onclick="showPage('weddings')">Weddings</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-copy">© 2025 Youghiogheny Country Club.</div><div class="footer-phone">(412) 751-2943</div></div>
+  </footer>
+</div>
+
+<script>
+function showPage(name) {
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  // Show target
+  const target = document.getElementById('page-' + name);
+  target.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  // Update nav highlight
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.classList.toggle('active', a.dataset.page === name);
+  });
+}
+</script>
+</body>
+</html>
